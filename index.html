@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For Khushi 💝</title>
+
+<style>
+body {
+    background: linear-gradient(#ffc8fd, #ffd9f7);
+    font-family: 'Comic Sans MS', cursive;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+    overflow: hidden;
+}
+
+/* floating hearts */
+.heart {
+    position: fixed;
+    bottom: -20px;
+    font-size: 18px;
+    animation: floatUp linear infinite;
+    opacity: 0.7;
+}
+@keyframes floatUp {
+    to { transform: translateY(-110vh); opacity: 0; }
+}
+
+.container {
+    text-align: center;
+    padding: 16px;
+    width: 95%;
+    max-width: 420px;
+}
+
+h1 {
+    color: #ff6b6b;
+    font-size: 2.1em;
+    margin-bottom: 10px;
+}
+
+.subtext {
+    color: #ff4d6d;
+    font-size: 1.1em;
+    min-height: 28px;
+    margin-top: 6px;
+}
+
+.gif img {
+    width: 200px;
+    max-width: 75vw;
+    border-radius: 16px;
+}
+
+/* buttons area — extra height so yes can grow downward */
+.buttons {
+    margin-top: 34px;
+    height: 120px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 20px;
+    position: relative;
+}
+
+button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: transform .25s ease;
+    font-size: 1.2em;
+    position: relative;
+}
+
+#yesBtn {
+    background-color: #97cdff;
+    color: white;
+    z-index: 2; /* always above no */
+    box-shadow: 0 0 12px rgba(151,205,255,.8);
+}
+
+#noBtn {
+    background-color: #ff6b6b;
+    color: white;
+    z-index: 1;
+}
+
+.footer {
+    position: fixed;
+    bottom: 14px;
+    color: #ff6b6b;
+    font-size: 1.05em;
+}
+
+/* confetti */
+.confetti {
+    position: fixed;
+    top: -20px;
+    width: 10px;
+    height: 16px;
+    animation: fall linear forwards;
+}
+@keyframes fall {
+    to { transform: translateY(110vh) rotate(720deg); opacity: 0; }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+    <h1>Will you be my valentine? 💝</h1>
+
+    <div class="gif">
+        <img src="media/VM1fcpu2bKs1e2Kdbj/200w.gif">
+    </div>
+
+    <div class="subtext" id="subtext">Be honest 😌</div>
+
+    <div class="buttons">
+        <button id="yesBtn">Yes!</button>
+        <button id="noBtn">No >:(</button>
+    </div>
+</div>
+
+<div class="footer">From Apar to Khushi 💕</div>
+
+<script>
+/* floating hearts */
+for (let i=0;i<15;i++){
+    const h=document.createElement("div");
+    h.className="heart";
+    h.innerHTML="💖";
+    h.style.left=Math.random()*100+"vw";
+    h.style.animationDuration=(6+Math.random()*6)+"s";
+    document.body.appendChild(h);
+}
+
+const sadLines = [
+"Are you sure? 🥺",
+"Really sure? 💔",
+"Think again… 😢",
+"I’ll be very sad 😭",
+"Don’t do this to me 😿",
+"Last chance… 💘"
+];
+
+const yesBtn = document.getElementById('yesBtn');
+const noBtn = document.getElementById('noBtn');
+const subtext = document.getElementById('subtext');
+const container = document.querySelector('.container');
+
+let yesScale = 1;
+let noScale = 1;
+let noClicks = 0;
+
+noBtn.addEventListener('click', () => {
+
+    /* grow yes, shrink no — capped so text not covered */
+    yesScale = Math.min(yesScale * 1.25, 3.2);
+    noScale *= 0.85;
+
+    yesBtn.style.transform = `scale(${yesScale})`;
+    noBtn.style.transform = `scale(${noScale})`;
+
+    subtext.textContent = sadLines[Math.min(noClicks, sadLines.length-1)];
+    noClicks++;
+});
+
+yesBtn.addEventListener('click', () => {
+    container.innerHTML = `
+        <h1>Yaaay! I love you! 💖</h1>
+        <div class="gif">
+            <img src="https://media2.giphy.com/media/h20IwOYYJgCMbj4uaD/giphy.gif">
+        </div>
+    `;
+    confetti();
+});
+
+function confetti(){
+    for(let i=0;i<160;i++){
+        const c=document.createElement("div");
+        c.className="confetti";
+        c.style.left=Math.random()*100+"vw";
+        c.style.background=`hsl(${Math.random()*360},100%,60%)`;
+        c.style.animationDuration=(2+Math.random()*2)+"s";
+        document.body.appendChild(c);
+    }
+}
+</script>
+
+</body>
+</html>
